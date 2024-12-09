@@ -41,9 +41,9 @@ export default class IOvalidator {
     static stringToNumberList(string, delimeter) {
         const stringNumbers = this.splitString(string, delimeter);
 
-        stringNumbers.map(number => {
-            number = Number(number);
+        const newList = stringNumbers.map(Number);
 
+        newList.map(number => {
             if (Number.isNaN(number)) {
                 throw new Error(ERROR_MESSAGE.INPUT_IS_NOT_NUMBER);
             }
@@ -52,8 +52,7 @@ export default class IOvalidator {
                 throw new Error(ERROR_MESSAGE.INPUT_IN_NOT_POSITIVE);
             }
         })
-
-        return stringNumbers;
+        return newList;
     }
 
 }
