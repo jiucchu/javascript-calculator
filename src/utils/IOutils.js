@@ -8,6 +8,6 @@ export class InputUtils {
 
 export class OutputUtils {
     static printSum(sum) {
-        Console.print('값 :' + sum);
+        Console.print('결과 : ' + sum);
     }
 }
