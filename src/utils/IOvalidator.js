@@ -1,25 +1,33 @@
-import { ERROR_MESSAGE } from "./Constants";
+import { ERROR_MESSAGE } from "./Constants.js";
+import { Console } from "@woowacourse/mission-utils";
 
 export default class IOvalidator {
     static InputIsEmpty(input) {
         if ((input === null) || (input === '')) {
             return true
         }
-
         return false
     }
 
     static checkCustomSeporator(inputString) {
-        if (inputString.startWith('//')) {
-            customDelimeterStartIndex = inputString.indexof('\\n');
-            customDelimeterEndIndex = inputString.indexof('\\n') + 2;
-
+        if (inputString.startsWith('//')) {
+            const customDelimeterStartIndex = inputString.indexOf('\\n');
             if (customDelimeterStartIndex == -1) {
                 throw new Error(ERROR_MESSAGE.CUSTOM_DELIMETER_ERROR);
             }
 
-            return inputString.subString(customDelimeterStartIndex, customDelimeterEndIndex + 1);
+            return inputString.substring(2, customDelimeterStartIndex);
         }
+    }
+
+    static sliceString(inputString, delimeter) {
+        if (delimeter == null) {
+            return inputString
+        }
+
+        const customDelimeterEndIndex = inputString.indexOf('\\n') + 2;
+
+        return inputString.substring(customDelimeterEndIndex);
     }
 
     static splitString(string, delimeter) {
@@ -30,11 +38,13 @@ export default class IOvalidator {
         return string.split(delimeter);
     }
 
-    static stringToNumber(stringNumbers) {
-        stringNumbers.map(number => {
-            number = Number(string);
+    static stringToNumberList(string, delimeter) {
+        const stringNumbers = this.splitString(string, delimeter);
 
-            if (Number.isNaN(string)) {
+        stringNumbers.map(number => {
+            number = Number(number);
+
+            if (Number.isNaN(number)) {
                 throw new Error(ERROR_MESSAGE.INPUT_IS_NOT_NUMBER);
             }
 
